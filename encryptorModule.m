@@ -15,7 +15,6 @@
 #include "GlobalRouter.h"
 
 #include "TapGeneratorViewController.h"
-#include "CertExchangeViewController.h"
 
 @implementation Encryptor
 
