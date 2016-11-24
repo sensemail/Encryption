@@ -157,7 +157,7 @@
 
 -(NSArray*)/*(NSData*)*/makeKey:(NSString*)key roundsToGo:(int)roundsToGo
 {
-    uint8_t salt[32];
+    uint8_t salt[32]; // HMAC key
     
     NSMutableString* saltInput = [NSMutableString stringWithString:[key uppercaseString]];
     
@@ -227,7 +227,7 @@
     //NSLog(@"Check Length %lu", (unsigned long)dataSrc.length);
     
     CCHmac(kCCHmacAlgSHA256, signKey.bytes, signKey.length, dataSrc.bytes, dataSrc.length-CC_SHA256_DIGEST_LENGTH, cHMAC);
-    CC_SHA256(cHMAC, CC_SHA256_DIGEST_LENGTH, cHMACHash); // Why? - compare hashes to make them equal length. anyway - why?
+    CC_SHA256(cHMAC, CC_SHA256_DIGEST_LENGTH, cHMACHash); // Why? - compare hashes to make them equal length. anyway - why? If HMAC length differs from SHA256 length... Rudimental...
     
     [dataSrc getBytes:cHMACUser range:NSMakeRange(dataSrc.length-CC_SHA256_DIGEST_LENGTH, CC_SHA256_DIGEST_LENGTH)];
     CC_SHA256(cHMACUser, CC_SHA256_DIGEST_LENGTH, cHMACUserHash);
@@ -424,7 +424,7 @@
     for (int i=0; i<blocks; i++) {
         memset(&dataBlock, 0, 68);
         [ret getBytes:&dataBlock range:NSMakeRange(i*32, 32)];
-        *(uint8_t*)(&dataBlock[32]) = i;
+        dataBlock[32] = (uint8_t)i;
         if (i > 0) {
             memcpy(&dataBlock[36], &hashBlock, 32);
         }
@@ -466,7 +466,7 @@
     for (int i=0; i<blocks; i++) {
         memset(&dataBlock, 0, 68);
         [data getBytes:&dataBlock range:NSMakeRange(i*32, 32)];
-        *(uint8_t*)(&dataBlock[32]) = i;
+        dataBlock[32] = (uint8_t)i;
         if (i > 0) {
             memcpy(&dataBlock[36], &hashBlock, 32);
         }
