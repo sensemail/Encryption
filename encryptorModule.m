@@ -2,8 +2,8 @@
 //  Encryptor.m
 //  SenseMail2
 //
-//  Created by Sergey on 03.04.15.
-//  Copyright (c) 2015 Sergey. All rights reserved.
+//  Created by CreepyTwo Labs on 03.04.15.
+//  Copyright (c) 2015-2016 CreepyTwo Labs Ltd. All rights reserved.
 //
 
 #import "Encryptor.h"
